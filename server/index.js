@@ -3,7 +3,7 @@ const db = require('../db/index.js');
 
 const app = express();
 
-
+const path = require('path');
 const port = process.env.PORT || 3000;
 
 var bodyParser = require('body-parser');
@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const server = app
 .listen(port, () => console.log(`Listening on ${ port }`));
 
+app.use(express.static(path.join(__dirname, '../client/')))
 
 app.get('/', function (req, res) {
   res.send( 'Welcome to the student system!' );
@@ -21,6 +22,7 @@ app.get('/', function (req, res) {
 
 
 app.post('/addStudent',function(req,res){
+    console.log(req.body);
     var student = new db.Student(req.body);
     student.save()
     .then(item => {
@@ -83,3 +85,4 @@ app.put('/api/students/:studentId', function (req, res) {
     })
        
 });
+
