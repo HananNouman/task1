@@ -3,7 +3,7 @@ const db = require('../db/index.js');
 
 const app = express();
 
-const path = require('path');
+
 const port = process.env.PORT || 3000;
 
 const bodyParser = require('body-parser');
@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const server = app
 .listen(port, () => console.log(`Listening on ${ port }`));
 
-app.use(express.static(path.join(__dirname, '../client/')))
 
 app.get('/', function (req, res) {
   res.send( 'Welcome to the student system!' );
@@ -22,25 +21,21 @@ app.get('/', function (req, res) {
 
 
 app.post('/api/student',function(req,res){
-  
-    let student = new db.Student(req.body);
-
+    const student = new db.Student(req.body);
     student.save()
     .then(item => {
-       res.send("item saved to database");
-   })
+     res.send("item saved to database");
+ })
     .catch(err => {
         console.log(err)
-       res.status(400).send("unable to save to database");
-   });
+        res.status(400).send("unable to save to database");
+    });
 
 
 })
 
-
-app.get('/api/student/id/:studentId',function(req,res){
+app.get('/api/studentId/:studentId',function(req,res){
     const studentId = parseInt(req.params.studentId)
-
 
     db.Student.findOne({studentId:studentId})
     .then(data => {
@@ -54,50 +49,24 @@ app.get('/api/student/id/:studentId',function(req,res){
 
 
 
-app.get('/api/student/name/:studentName',function(req,res){
-     const studentName = req.params.studentName
+app.get('/api/studentName/:studentName',function(req,res){
+   const studentName = req.params.studentName
 
-    
 
-    db.Student.find({studentName:studentName})
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err => {
-        console.log(err)
-    })
+   db.Student.find({studentName:studentName})
+   .then(data => {
+    res.send(data)
+})
+   .catch(err => {
+    console.log(err)
+})
 
 })
 
 
-app.get('/courses/id',function(req,res){
-     const studentId = parseInt(req.query.studentId);
-
-     db.Student.findOne({studentId:studentId},{courses:1,_id:0})
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-
-})
 
 
-app.get('/courses/name',function(req,res){
-     const studentName = req.query.studentName;
-
-     db.Student.findOne({studentName:studentName},{courses:1,_id:0})
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-
-
-
-app.put('/api/students/:studentId', function (req, res) {
+app.put('/api/studentId/:studentId', function (req, res) {
 
     const studentId = parseInt(req.params.studentId);
     const newValue = req.body;
@@ -115,30 +84,73 @@ app.put('/api/students/:studentId', function (req, res) {
     .catch(err => {
         console.log(err)
     })
-       
+
 });
+
+
 
 app.delete('/api/students', function(req,res){
-db.Student.remove({}, function (err,data) {
-  if (err) return console.log(err);
-})
+
+    db.Student.deleteMany()
+    .then(()=>{
+        res.send('removed')
+    })
+    .catch(err => {
+        console.log(err)
+    })
 })
 
-app.delete('api/studentName/:name',function(req,res){
-    const name = parseInt(req.params.name);
+
+app.delete('/api/studentName/:studentName',function(req,res){
+    const studentName = req.params.studentName;
     
-db.Pokemon.remove({ studentName: name}, function (err,data) {
-  if (err) return  console.log(err);
+db.Student.deleteOne({ studentName: studentName})
+        .then(()=>{
+            res.send('removed')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+})
+
+app.delete('/api/studentId/:studentId',function(req,res){
+
+    const studentId = parseInt(req.params.studentId);
+
+        db.Student.deleteOne({ studentId: studentId})
+        .then(()=>{
+            res.send('removed')
+        })
+        .catch(err => {
+            console.log(err)
+        })
 });
+
+
+app.get('/api/courses/studentId',function(req,res){
+   const studentId = parseInt(req.query.studentId);
+
+   db.Student.findOne({studentId:studentId},{courses:1,_id:0})
+   .then(data => {
+    res.send(data)
+})
+   .catch(err => {
+    console.log(err)
+})
+
 })
 
 
-app.delete('api/studentId/:id',function(req,res){
-    const id = parseInt(req.params.id);
-        db.Student.deleteOne({ studentId: id}, function (err) {
-  if (err) return console.log(err);
+app.get('/api/courses/studentName',function(req,res){
+   const studentName = req.query.studentName;
 
-});
-
+   db.Student.findOne({studentName:studentName},{courses:1,_id:0})
+   .then(data => {
+    res.send(data)
+})
+   .catch(err => {
+    console.log(err)
+})
 
 })
