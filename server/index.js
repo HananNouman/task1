@@ -63,7 +63,7 @@ app.get('/getStudentByName/:studentName',function(req,res){
 })
 
 
-app.put('/student/:studentId', function (req, res) {
+app.put('/students/:studentId', function (req, res) {
     const studentId = parseInt(req.params.studentId);
     const newValue = req.body;
 
