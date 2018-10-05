@@ -22,8 +22,9 @@ app.get('/', function (req, res) {
 
 
 app.post('/api/student',function(req,res){
-    console.log(req.body);
+  
     let student = new db.Student(req.body);
+
     student.save()
     .then(item => {
        res.send("item saved to database");
@@ -36,8 +37,10 @@ app.post('/api/student',function(req,res){
 
 })
 
-app.get('/api/studentById/:studentId',function(req,res){
-    let studentId = parseInt(req.params.studentId)
+
+app.get('/api/student/id/:studentId',function(req,res){
+    const studentId = parseInt(req.params.studentId)
+
 
     db.Student.findOne({studentId:studentId})
     .then(data => {
@@ -50,8 +53,10 @@ app.get('/api/studentById/:studentId',function(req,res){
 })
 
 
-app.get('/api/studentByName/:studentName',function(req,res){
-     let studentName = req.params.studentName
+
+app.get('/api/student/name/:studentName',function(req,res){
+     const studentName = req.params.studentName
+
     
 
     db.Student.find({studentName:studentName})
@@ -63,6 +68,33 @@ app.get('/api/studentByName/:studentName',function(req,res){
     })
 
 })
+
+
+app.get('/courses/id',function(req,res){
+     const studentId = parseInt(req.query.studentId);
+
+     db.Student.findOne({studentId:studentId},{courses:1,_id:0})
+    .then(data => {
+        res.send(data)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+})
+
+
+app.get('/courses/name',function(req,res){
+     const studentName = req.query.studentName;
+
+     db.Student.findOne({studentName:studentName},{courses:1,_id:0})
+    .then(data => {
+        res.send(data)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
 
 
 app.put('/api/students/:studentId', function (req, res) {
@@ -105,5 +137,8 @@ app.delete('api/studentId/:id',function(req,res){
     const id = parseInt(req.params.id);
         db.Student.deleteOne({ studentId: id}, function (err) {
   if (err) return console.log(err);
+
+});
+
 
 })
