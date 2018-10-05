@@ -64,6 +64,7 @@ app.get('/getStudentByName/:studentName',function(req,res){
 
 
 app.put('/students/:studentId', function (req, res) {
+
     const studentId = parseInt(req.params.studentId);
     const newValue = req.body;
 
@@ -77,5 +78,8 @@ app.put('/students/:studentId', function (req, res) {
             console.log(err);
         });
     });
+    .catch(err => {
+        console.log(err)
+    })
        
 });
