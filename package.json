@@ -6,9 +6,10 @@
     "start": "node server/index.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongoose": "^5.2.8",
-    "npm": "^5.8.0",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "npm": "^5.8.0"
   }
 }
