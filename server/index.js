@@ -86,3 +86,25 @@ app.put('/api/students/:studentId', function (req, res) {
        
 });
 
+  app.delete('/api/student', function(req,res){
+db.Student.remove({}, function (err,data) {
+  if (err) return console.log(err);
+})
+})
+
+app.delete('/studentName/:name',function(req,res){
+    let name = JSON.parse(req.url.split('/')[1])
+    db.Student.deleteOne({ studentName: name}, function (err) {
+  if (err) return console.log(err);
+  // deleted at most one tank document
+});
+})
+
+
+app.delete('/studentId/:id',function(req,res){
+    let id = JSON.parse(req.url.split('/')[1])
+        db.Student.deleteOne({ studentId: id}, function (err) {
+  if (err) return console.log(err);
+  // deleted at most one tank document
+});
+})
