@@ -62,3 +62,21 @@ app.get('/student/:studentName',function(req,res){
 
 
 })
+
+
+app.put('/student/:studentId', function (req, res) {
+    const studentId = parseInt(req.params.studentId);
+    const newValue = req.body;
+
+    db.Student.findOneAndUpdate({ studentId : studentId }, newValue)
+    .then( previousValue => {
+        db.Student.findOne({ studentId : studentId })
+        .then(updated => {
+            res.send(updated);
+        });
+        .catch(err => {
+            console.log(err);
+        });
+    });
+       
+});
