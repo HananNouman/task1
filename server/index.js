@@ -3,7 +3,7 @@ const db = require('../db/index.js');
 
 const app = express();
 
-
+const path = require('path');
 const port = process.env.PORT || 3000;
 
 const bodyParser = require('body-parser');
@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const server = app
 .listen(port, () => console.log(`Listening on ${ port }`));
 
+app.use(express.static(path.join(__dirname, '../client/')))
 
 app.get('/', function (req, res) {
   res.send( 'Welcome to the student system!' );
@@ -21,7 +22,9 @@ app.get('/', function (req, res) {
 
 
 app.post('/addStudent',function(req,res){
+
     const student = new db.Student(req.body);
+   
     student.save()
     .then(item => {
        res.send("item saved to database");
@@ -63,6 +66,7 @@ app.get('/student/name/:studentName',function(req,res){
 
 })
 
+
 app.get('/courses/id',function(req,res){
      const studentId = parseInt(req.query.studentId);
 
@@ -87,5 +91,50 @@ app.get('/courses/name',function(req,res){
     .catch(err => {
         console.log(err)
     })
+
+
+
+app.put('/api/students/:studentId', function (req, res) {
+
+    const studentId = parseInt(req.params.studentId);
+    const newValue = req.body;
+
+    db.Student.findOneAndUpdate({ studentId : studentId }, newValue)
+    .then( previousValue => {
+        db.Student.findOne({ studentId : studentId })
+        .then(updated => {
+            res.send(updated);
+        });
+        .catch(err => {
+            console.log(err);
+        });
+    });
+    .catch(err => {
+        console.log(err)
+    })
+       
+});
+
+  app.delete('/api/student', function(req,res){
+db.Student.remove({}, function (err,data) {
+  if (err) return console.log(err);
+})
+})
+
+app.delete('/studentName/:name',function(req,res){
+    let name = JSON.parse(req.url.split('/')[1])
+    db.Student.deleteOne({ studentName: name}, function (err) {
+  if (err) return console.log(err);
+  // deleted at most one tank document
+});
+})
+
+
+app.delete('/studentId/:id',function(req,res){
+    let id = JSON.parse(req.url.split('/')[1])
+        db.Student.deleteOne({ studentId: id}, function (err) {
+  if (err) return console.log(err);
+  // deleted at most one tank document
+});
 
 })
