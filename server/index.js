@@ -6,7 +6,7 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -21,7 +21,7 @@ app.get('/', function (req, res) {
 
 
 app.post('/addStudent',function(req,res){
-    var student = new db.Student(req.body);
+    const student = new db.Student(req.body);
     student.save()
     .then(item => {
        res.send("item saved to database");
@@ -34,8 +34,8 @@ app.post('/addStudent',function(req,res){
 
 })
 
-app.get('/getStudentById/:studentId',function(req,res){
-    var studentId = parseInt(req.params.studentId)
+app.get('/student/id/:studentId',function(req,res){
+    const studentId = parseInt(req.params.studentId)
 
     db.Student.findOne({studentId:studentId})
     .then(data => {
@@ -48,11 +48,39 @@ app.get('/getStudentById/:studentId',function(req,res){
 })
 
 
-app.get('/getStudentByName/:studentName',function(req,res){
-     var studentName = req.params.studentName
+
+app.get('/student/name/:studentName',function(req,res){
+     const studentName = req.params.studentName
     
 
     db.Student.find({studentName:studentName})
+    .then(data => {
+        res.send(data)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+})
+
+app.get('/courses/id',function(req,res){
+     const studentId = parseInt(req.query.studentId);
+
+     db.Student.findOne({studentId:studentId},{courses:1,_id:0})
+    .then(data => {
+        res.send(data)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+})
+
+
+app.get('/courses/name',function(req,res){
+     const studentName = req.query.studentName;
+
+     db.Student.findOne({studentName:studentName},{courses:1,_id:0})
     .then(data => {
         res.send(data)
     })
