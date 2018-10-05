@@ -34,8 +34,8 @@ app.post('/addStudent',function(req,res){
 
 })
 
-app.get('/student/:studentId',function(req,res){
-    var studentId = Number(req.params.studentId)
+app.get('/getStudentById/:studentId',function(req,res){
+    var studentId = parseInt(req.params.studentId)
 
     db.Student.findOne({studentId:studentId})
     .then(data => {
@@ -48,8 +48,8 @@ app.get('/student/:studentId',function(req,res){
 })
 
 
-app.get('/student/:studentName',function(req,res){
-    var studentName = req.params.studentName
+app.get('/getStudentByName/:studentName',function(req,res){
+     var studentName = req.params.studentName
     
 
     db.Student.find({studentName:studentName})
@@ -59,6 +59,5 @@ app.get('/student/:studentName',function(req,res){
     .catch(err => {
         console.log(err)
     })
-
 
 })
