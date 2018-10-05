@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Starter from './components/starter.jsx';
+//import Starter from './components/starter.jsx';
 import $ from 'jquery';
 
 
@@ -83,7 +83,7 @@ insert(){
 
 render(){
 
-		<button onClick = {this.insert.bind(this)}>ADD!</button><br/>
+		<button onClick = {this.insert.bind(this)}>ADD!</button>
 		
 }
 }

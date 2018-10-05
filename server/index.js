@@ -75,11 +75,11 @@ app.put('/api/students/:studentId', function (req, res) {
         db.Student.findOne({ studentId : studentId })
         .then(updated => {
             res.send(updated);
-        });
+        })
         .catch(err => {
             console.log(err);
         });
-    });
+    })
     .catch(err => {
         console.log(err)
     })
@@ -92,19 +92,18 @@ db.Student.remove({}, function (err,data) {
 })
 })
 
-app.delete('/studentName/:name',function(req,res){
-    let name = JSON.parse(req.url.split('/')[1])
+app.delete('api/studentName/:name',function(req,res){
+    const studentId = parseInt(req.params.name);
+    
     db.Student.deleteOne({ studentName: name}, function (err) {
   if (err) return console.log(err);
-  // deleted at most one tank document
 });
 })
 
 
-app.delete('/studentId/:id',function(req,res){
-    let id = JSON.parse(req.url.split('/')[1])
+app.delete('api/studentId/:id',function(req,res){
+    const studentId = parseInt(req.params.id);
         db.Student.deleteOne({ studentId: id}, function (err) {
   if (err) return console.log(err);
-  // deleted at most one tank document
 });
 })
