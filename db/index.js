@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 
- mongoose.connect('mongodb://localhost:27017/Students', { useNewUrlParser: true });
+ mongoose.connect('mongodb://localhost:27017/Students', { useNewUrlParser: true, 
+  useCreateIndex: true
+ });
 
 var db = mongoose.connection;
 
@@ -14,8 +16,8 @@ db.once('open', function() {
 });
 
 var studentSchema = mongoose.Schema({
-  id    : { type:Number, unique : true },
-  name   : String,
+  studentId    : { type: Number, unique : true },
+  studentName   : String,
   age : Number,
   courses: [String],
   
