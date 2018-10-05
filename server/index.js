@@ -36,8 +36,8 @@ app.post('/addStudent',function(req,res){
 
 })
 
-app.get('/student/:studentId',function(req,res){
-    var studentId = Number(req.params.studentId)
+app.get('/getStudentById/:studentId',function(req,res){
+    var studentId = parseInt(req.params.studentId)
 
     db.Student.findOne({studentId:studentId})
     .then(data => {
@@ -50,8 +50,8 @@ app.get('/student/:studentId',function(req,res){
 })
 
 
-app.get('/student/:studentName',function(req,res){
-    var studentName = req.params.studentName
+app.get('/getStudentByName/:studentName',function(req,res){
+     var studentName = req.params.studentName
     
 
     db.Student.find({studentName:studentName})
@@ -62,6 +62,27 @@ app.get('/student/:studentName',function(req,res){
         console.log(err)
     })
 
-
 })
+
+
+app.put('/api/students/:studentId', function (req, res) {
+
+    const studentId = parseInt(req.params.studentId);
+    const newValue = req.body;
+
+    db.Student.findOneAndUpdate({ studentId : studentId }, newValue)
+    .then( previousValue => {
+        db.Student.findOne({ studentId : studentId })
+        .then(updated => {
+            res.send(updated);
+        });
+        .catch(err => {
+            console.log(err);
+        });
+    });
+    .catch(err => {
+        console.log(err)
+    })
+       
+});
 

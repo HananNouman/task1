@@ -16,10 +16,10 @@ db.once('open', function() {
 });
 
 var studentSchema = mongoose.Schema({
-  studentId    : { type: Number, unique : true },
+  studentId    : { type: Number,  unique : true , default: 0},
   studentName   : String,
   age : Number,
-  courses: [String],
+  courses: [String]
   
 });
 

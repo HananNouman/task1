@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server/index.js",
     "dev-react": "webpack -d --watch"
+
   },
   "dependencies": {
     "body-parser": "^1.18.3",
