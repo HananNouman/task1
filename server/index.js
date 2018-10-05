@@ -21,10 +21,10 @@ app.get('/', function (req, res) {
 });
 
 
-app.post('/addStudent',function(req,res){
+app.post('/api/student',function(req,res){
+  
+    let student = new db.Student(req.body);
 
-    const student = new db.Student(req.body);
-   
     student.save()
     .then(item => {
        res.send("item saved to database");
@@ -37,8 +37,10 @@ app.post('/addStudent',function(req,res){
 
 })
 
-app.get('/student/id/:studentId',function(req,res){
+
+app.get('/api/student/id/:studentId',function(req,res){
     const studentId = parseInt(req.params.studentId)
+
 
     db.Student.findOne({studentId:studentId})
     .then(data => {
@@ -52,8 +54,9 @@ app.get('/student/id/:studentId',function(req,res){
 
 
 
-app.get('/student/name/:studentName',function(req,res){
+app.get('/api/student/name/:studentName',function(req,res){
      const studentName = req.params.studentName
+
     
 
     db.Student.find({studentName:studentName})
@@ -115,25 +118,27 @@ app.put('/api/students/:studentId', function (req, res) {
        
 });
 
-  app.delete('/api/student', function(req,res){
+app.delete('/api/students', function(req,res){
 db.Student.remove({}, function (err,data) {
   if (err) return console.log(err);
 })
 })
 
 app.delete('api/studentName/:name',function(req,res){
-    const studentId = parseInt(req.params.name);
+    const name = parseInt(req.params.name);
     
-    db.Student.deleteOne({ studentName: name}, function (err) {
-  if (err) return console.log(err);
+db.Pokemon.remove({ studentName: name}, function (err,data) {
+  if (err) return  console.log(err);
 });
 })
 
 
 app.delete('api/studentId/:id',function(req,res){
-    const studentId = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
         db.Student.deleteOne({ studentId: id}, function (err) {
   if (err) return console.log(err);
+
 });
+
 
 })
