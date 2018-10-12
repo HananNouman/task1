@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
- mongoose.connect('mongodb://localhost:27017/users', { useNewUrlParser: true, 
+ mongoose.connect('mongodb://localhost:27017/Users', { useNewUrlParser: true, 
+
   useCreateIndex: true
  });
 
@@ -15,14 +16,5 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var userSchema = mongoose.Schema({
-  id    : { type: Number,  unique : true , default: 0},
-  name   : String,
-  age : Number,
-  role: String
-});
+module.exports = db;
 
-var User = mongoose.model('User', userSchema);
-
-
-module.exports.User = User;

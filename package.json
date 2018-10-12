@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "nodemon server/index.js",
     "dev-react": "webpack -d --watch"
-
   },
   "dependencies": {
     "body-parser": "^1.18.3",
