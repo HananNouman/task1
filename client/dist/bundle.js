@@ -90,8 +90,38 @@
 	
 				_jquery2.default.ajax({
 					method: 'POST',
-					url: '/addStudent',
-					data: { "studentId": 7, "studentName": "xyz", "age": 3, "courses": [] },
+					url: '/api/users/',
+					data: { "id": 7, "name": "xyz", "age": 3, "role": "ADMIN" },
+					success: function success(data) {
+						alert("added successfully!");
+						console.log("success", data);
+					}
+				});
+			}
+		}, {
+			key: 'put',
+			value: function put() {
+				//var number = this.state.number;
+	
+				_jquery2.default.ajax({
+					method: 'PUT',
+					url: '/api/users/7',
+					data: { "id": 7, "name": "xyz1", "age": 333333, "role": "ADMIN" },
+					success: function success(data) {
+						alert("added successfully!");
+						console.log("success", data);
+					}
+				});
+			}
+		}, {
+			key: 'delete',
+			value: function _delete() {
+				//var number = this.state.number;
+	
+				_jquery2.default.ajax({
+					method: 'DELETE',
+					url: '/api/users/7',
+					data: { "id": 7, "name": "xyz", "age": 333, "role": "ADMIN" },
 					success: function success(data) {
 						alert("added successfully!");
 						console.log("success", data);
@@ -102,9 +132,23 @@
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					'button',
-					{ onClick: this.insert.bind(this) },
-					'ADD!'
+					'div',
+					null,
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.insert.bind(this) },
+						'ADD!'
+					),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.put.bind(this) },
+						'PUT! '
+					),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.delete.bind(this) },
+						'DELETE! '
+					)
 				);
 			}
 		}]);
