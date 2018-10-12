@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
- mongoose.connect('mongodb://localhost:27017/Students', { useNewUrlParser: true, 
+ mongoose.connect('mongodb://localhost:27017/users', { useNewUrlParser: true, 
   useCreateIndex: true
  });
 
@@ -15,13 +15,14 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var studentSchema = mongoose.Schema({
-  studentId    : { type: Number,  unique : true , default: 0},
-  studentName   : String,
+var userSchema = mongoose.Schema({
+  id    : { type: Number,  unique : true , default: 0},
+  name   : String,
   age : Number,
-  courses: [String]
-  
+  role: String
 });
 
-var Student = mongoose.model('Student', studentSchema);
-module.exports.Student = Student
+var User = mongoose.model('User', userSchema);
+
+
+module.exports.User = User;
