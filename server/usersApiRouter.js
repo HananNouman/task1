@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const controller = require('./controller');
+const controller = require('./usersApiController');
 
   router.route('/')
   .post(controller.createOne)

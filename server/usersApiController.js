@@ -1,7 +1,7 @@
 const User = require('../db/db');
 const ObjectId = require('mongodb').ObjectID;
 
-exports.createOne = function (req, res ,next) {
+exports.createOne =  (req, res ,next) => {
     const user = new User(req.body);
     user.save()
     .then(item => {
@@ -12,7 +12,7 @@ exports.createOne = function (req, res ,next) {
     });
 };
 
-exports.retrieve = function (req, res,next) {
+exports.retrieve = (req, res,next) => {
     User.find({})
         .then(data => {
             res.send(data)
@@ -23,7 +23,7 @@ exports.retrieve = function (req, res,next) {
  };
 
 
-exports.retrieveOne = function (req, res,next) {
+exports.retrieveOne = (req, res,next) =>{
 	const id = req.params.id;
     User.findOne({_id:ObjectId(id)})
     .then(data => {
@@ -34,7 +34,7 @@ exports.retrieveOne = function (req, res,next) {
     })
 };
 
-exports.updateOne = function (req, res, next){
+exports.updateOne =  (req, res, next) =>{
     const id = req.params.id
     const newValue = req.body;
     User.findOneAndUpdate({_id:ObjectId(id)}, newValue)
@@ -53,7 +53,7 @@ exports.updateOne = function (req, res, next){
 };
 
 
-exports.delete = function (req, res, next) {
+exports.delete = (req, res, next) => {
   User.deleteMany()
     .then(()=>{
         res.send('removed')
@@ -64,7 +64,7 @@ exports.delete = function (req, res, next) {
 };
 
 
-exports.deleteOne = function (req, res, next) {
+exports.deleteOne =  (req, res, next) => {
    const id = req.params.id;
         User.deleteOne({_id:ObjectId(id)})
         .then(()=>{

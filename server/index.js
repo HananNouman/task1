@@ -1,7 +1,7 @@
 const express = require('express');
 
 const bodyParser = require('body-parser');
-const router = require('./router.js');
+const userApiRouter = require('./usersApiRouter.js');
 const db = require('../db/index');
 const path =require('path');
 
@@ -9,11 +9,9 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/api/users', userapi);
+app.use('/api/users', userApiRouter);
 
 
-
-app.use('/api/user', router);
 
 app.use(express.static(path.join(__dirname, '../client/')))
 
